@@ -1,2 +1,406 @@
 section
-  h2 BLAH!
+  h1
+    | Scalable
+    br
+    | and
+    br
+    | Maintainable
+       CSS/SASS
+  p
+    small
+      | Eckhard Rotte,&nbsp;
+      == link_to " (@erotte)", "http://twitter.com/erotte"
+
+
+section
+  h2 So, whats wrong with SASS?
+  p.fragment Nothing.
+
+  aside.notes
+    Notizen Popizen
+
+section
+  h2 But:
+  ul
+    li.fragment Our apps constantly increase in complexity (Blah&hellip;)
+    li.fragment responsive, mobile etc.
+    li.fragment CSS still sucks
+    li.fragment everybody is still doing their own thing
+
+section
+  h2 SASS/Compass
+  ul
+    li.fragment
+      | No constraints. No rules.
+    li.fragment
+      | It's very easy to create really complex bullshit SASS/CSS!
+
+section
+ h2 Shitty code alert!
+ pre
+  code
+    | #page
+        #list
+          +column(18,true)
+          #list-header
+            text-align: right
+            .view-actions
+              float: right
+              a
+                +inline-block
+                height: 25px
+                &#action-flat
+                  background: transparent image-url('bg-tabs.png')
+                  &.active
+                    background-position: 0 0
+                  &:hover
+                    background-position: 0 -50px
+                &#action-grouped
+                  background: #cde
+                  &.active
+                    background-position: -36px -25px
+ pre.fragment
+  code
+    | #page #list #list-header .view-actions a#action-flat.active:hover{
+        background-position: 0 0
+      }
+
+section
+  h1 SMACSS
+  p.fragment Scalable and Modular Architecture for CSS
+
+  p.fragment
+    | by Jonathan Snook
+    == link_to "(@snookca)", "http://twitter.com/snookca"
+  ul.fragment
+    li coding and naming conventions
+    li a style guide
+    li a guidelines framework
+    li classification system
+
+section
+  
+  h2 Categorizing CSS rules
+  ul
+    li Base
+    li Layout
+    li Modules
+    li State
+    li (Theme)
+
+section
+  h3 Base
+  ul
+    li basic element styles
+    li the defaults
+    li resets
+    li
+      | should not contain nested rules
+  pre
+    code
+      | html, body, form {
+          margin: 0;
+          padding: 0; }
+
+        input[type=text] {
+          border: 1px solid #cde;
+        }
+
+        a { color: #039; }
+        a:hover { color: #03C; }
+
+section
+  h3 Layout
+  ul
+    li basic layout
+    li page sections
+    li grid
+    li usually: single selectors, #ids
+    li may include contextual selectors
+  pre
+    code
+      |
+        #header, #footer {
+          width:  auto;
+          margin  0 auto;
+        }
+        .l-fixed {
+          #header, #footer {
+            width:  960px;
+          }
+        }
+
+section
+  h3 Modules
+  ul
+    li are reuseable, modular, fragments, components, sections, widgets
+    li e.g. buttons, a product list, sidebar nav or teaser box
+
+section
+  h3 State
+  ul
+    li hidden or visible?
+    li collapsed or expanded?
+    li emphasized or quiet?
+
+section
+  h3 (Themes)
+  p ...
+
+section
+  h2 Example File Structure
+  pre
+    code
+      | + application.sass                  // @imports
+        + base/
+        |   _settings.css.sass              // SASS config variables
+        |   _reset.css.sass
+        |   _colors.css.sass
+        |   _element_defaults.css.sass
+        + layout/
+        |   _settings.css.sass              // SASS layout/grid variables
+        |   _containers.css.sass
+        + modules/
+        + other/
+  p
+    small 
+      a href="http://railslove.com/blog/2012/03/28/smacss-and-sass-the-future-of-stylesheets/"
+        | http://railslove.com/blog/2012/03/28/smacss-and-sass-the-future-of-stylesheets/ 
+section
+  h3 Some conventions and rules
+  ul
+    li.fragment use classes
+    li.fragment avoid #ids
+    li.fragment avoid element selectors
+    li.fragment avoid nesting
+    li.fragment .namespace-your-selectors
+    li.fragment create modules
+    li.fragment create more modules!
+    li.fragment ...
+section
+  h2 Example
+  pre
+    code
+      |
+        /* a layout rule */
+        .layout-fixed {...};
+
+        /* you may shorten the prefix */
+        .l-fixed {...};
+
+        /* a module. no prefix needed! */
+        .tab {...};
+
+        /* a module with state */
+        .tab.is-active {...}
+
+section
+  h3 Components
+  p parts of a module
+  pre
+    code
+      | .message {
+          border: 1px solid #333;
+          
+          .message-header {
+            font-weight: bold;
+          }
+          
+          .message-body
+            font-size: 14px
+          }
+        }
+
+section
+  h5 CSS
+  pre
+    code
+      | .searchbox {
+          width: 100%;
+        }
+        .searchbox input[type=text] {
+            width: 50%;
+        }
+  h5 SCSS
+  pre
+    code
+      | .searchbox {
+          width: 100%;
+          input[type=text] {
+            width: 50%;
+          }
+        }
+
+  .fragment
+    h4 Challenge
+    p
+      ' we need a variant of .searchbox in the Sidebar, with a full width input field.
+      br
+      ' What's your first instinct?
+
+section
+  h4 common solution:
+  pre
+    code
+      | #sidebar .searchbox input[type=text]{
+            width: 100%;
+        }
+  p.fragment
+    ' so far so good.
+    br
+    ' Next exercise: we need another variant with a fixed width!
+
+section
+  h3 Nested Rules
+  h4 Specifity Wars start here
+  pre
+    code
+      | .searchbox {
+          width: 100%;
+          input[type=text] {
+            width: 50%;
+          }
+        }
+        #sidebar .searchbox input[type=text]{
+            width: 100%;
+        }
+        .searchbox-fixed {
+          width: 200px;
+        }
+        .searchbox-fixed input[type=text],
+        #sidebar .searchbox-fixed input[type=text] {
+          width: 150px;
+        }
+
+section
+  h3 Sub-Modules 
+  pre
+    code
+      | .searchbox {
+          width: 100%;
+          input[type=text] {
+            width: 50%;
+          }
+        }
+        .searchbox-wide input[type=text]{
+            width: 100%;
+        }
+        .searchbox-fixed {
+          width: 200px;
+        }
+        .searchbox-fixed input[type=text] {
+          width: 150px;
+        }
+  
+  pre
+    code
+      = '<div class="searchbox searchbox-fixed">'
+      br
+      = '  <input type="text" ... />'
+      br
+      = '</div>'
+
+section
+  ul
+    li Markup moves fast. Try to avoid conditional styling based on location
+    li create a Sub-Module of the module instead.
+
+section
+  h3 Sub-Classing
+  p CSS
+  pre
+    code
+      | .searchbox.searchbox-fixed {
+          width: 200px;
+        }
+  p SCSS
+  pre
+    code
+      | .searchbox {
+          &.searchbox-fixed {
+            width: 200px;
+          }
+        }
+  p SASS
+  pre
+    code
+      | .searchbox
+          &.searchbox-fixed
+            width: 200px;
+
+  
+section
+  h2 SMURF
+  p Scalable, Modular, reUsable Rails Frontends
+  p
+    | by Jakob Hilden
+    == link_to "(@jkwebs)", "http://twitter.com/jkwebs"
+
+  ul.fragment
+    li additional coding conventions for SMACSS
+    li a Ruby gem called "Smurfville" for generating live styleguides
+    li more accurate definitions of submodules and components
+
+section
+  H3 Examples
+  pre
+    code
+      | // -- module --
+        .m-box
+          // components
+          .m-box--header
+          .m-box--body
+
+          // modifiers
+          &.no-border
+          &.right
+
+          // states
+          &.is-disabled
+
+        // -- submodule --
+        .m-box_attention
+        // additional component, that only exists in the submodule
+          .m-box_attention--teaser
+  p
+    small 
+      a href="http://railslove.com/blog/2012/11/09/taking-sass-to-the-next-level-with-smurf-and-extend"
+        | http://railslove.com/blog/2012/11/09/taking-sass-to-the-next-level-with-smurf-and-extend 
+
+
+section
+  h1 SASS Variables
+
+section
+  h2 Shitty Code Alert again!
+  pre
+    code
+      small
+        |
+          // - buttons
+          $button-font-size: $base-font-size;
+          $button-light-color: #5f737d;
+          $button-background-color: #1a3744;
+          $button-text-color: white;
+          $search-button-background-color: $accent-color;
+          $search-button-light-color: #48BFE3;
+          $search-button-text-color: white;
+          $admin-button-light-color: #adbabe;
+          $admin-button-background-color: #8c9ea4;
+          $admin-button-text-color: white;
+          //
+          $neighbours-background-color: $button-background-color;
+          $neighbours-separator-color: $button-light-color;
+          $footer-text-color: $medium-gray;
+          $net-rating-border-color: #d2d2d2;
+          //
+          $pager-text-color: #666;
+          $pager-color: #b3b3b3;
+          $pager-highlight-color: #4c4c4c;
+section
+  h2 1. Use local variables
+section
+  h2 1. Use SASS/Compass Color manipulation
+
+section
+  h1 Sass extendables
