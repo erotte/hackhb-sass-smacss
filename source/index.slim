@@ -413,9 +413,33 @@ section
     ul
       li + you can re-use code
       li + smaller CSS output
-      li - may blow up your selectors to gigantic, comma separated selectors
+      li - may blow up your selectors to gigantic, comma separated selector stacks
       li - is not transparent, everything may get inherited
       li - has some strange side effects with complex selectors
+
+section
+  h3 %Placeholder Selector
+  p won't be compiled until it's @extended
+  pre
+    code
+      |
+        %clearfix
+          overflow: none;
+          *zoom: 1;
+
+        aside, footer
+          @extend %clearfix;
+
+        #grid-container
+          @extend %clearfix;
+
+  p produces
+  pre
+    code
+      | aside, footer, #grid-container {
+          overflow: none;
+          *zoom: 1;
+        }
 
 section
   h1 SASS Variables
@@ -446,10 +470,95 @@ section
           $pager-text-color: #666;
           $pager-color: #b3b3b3;
           $pager-highlight-color: #4c4c4c;
-section
-  h2 1. Use local variables
-section
-  h2 1. Use SASS/Compass Color manipulation
 
 section
-  h1 Sass extendables
+  h2 1. Use SASS/Compass color manipulation
+  pre
+    code
+      |
+        // Makes a color lighter.
+        +lighten($color, $amount)
+
+        // Makes a color darker.
+        +darken($color, $amount)
+
+        +saturate($color, $amount)
+        +desaturate($color, $amount)
+        +mix($color-1, $color-2, [$weight])
+
+
+section
+  h4 2. Use local variables
+  pre
+    code
+      | // config
+
+        // somewhere in the grids...
+        $base-gap: 10px
+
+        // colors
+        $ci-blue: #0F559A
+        $spotcolor: #faaaee
+  pre
+    code
+      |
+        %button
+          $bg-blue: $ci-blue
+          $bg-blue-dark: darken($ci-blue, 20)
+          padding: 2px $base-gap*1.5
+          +background-image(linear-gradient($bg-blue, $bg-blue-dark))
+
+          &.button-red
+            $red-start: shade($spot-color, 16)
+            $red-stop: darken($spot-color, 26)
+            +background-image(linear-gradient($red-start, $red-stop))
+
+section
+  h4
+    |It may get a kind of documentation
+  pre
+    code
+      |
+        .my-class {
+          border: 1px red solid;
+          height: 244px;
+          padding: 6px;
+          width: 368px;
+        }
+  p vs.
+  pre
+    code
+      |
+        .my-class {
+          $border-width: 1px;
+          $padding: 6px;
+          $height: 256px
+          $width: 380px;
+
+          border: $border-width red solid;
+          height: $height - 2 * ($padding + $border-width);
+          padding: $padding;
+          width: $width - 2 * ($padding + $border-width);
+        }
+  p
+    small
+      a href="http://www.hagenburger.net/BLOG/Document-Your-CSS-Sass-With-Variables.html"
+        | http://www.hagenburger.net/BLOG/Document-Your-CSS-Sass-With-Variables.html
+
+
+section
+  h1 Kudos to
+
+  p
+    | Jonathan Snook
+    == link_to "(@snookca)", "http://twitter.com/snookca"
+  p
+    | Jakob Hilden
+    == link_to "(@jkwebs)", "http://twitter.com/jkwebs"
+  p
+    | Nico Hagenburger
+    == link_to "(@Hagenburger)", "http://twitter.com/hagenburger"
+
+  p
+    | Examples in this Presentation are mostly shameless clones or stolen from these People!
+
