@@ -10,6 +10,8 @@ section
     small
       | Eckhard Rotte,&nbsp;
       == link_to " (@erotte)", "http://twitter.com/erotte"
+      br
+      == link_to "appfertigung.com", "http://appfertigung.com"
 
 
 section
@@ -174,6 +176,7 @@ section
     li.fragment avoid element selectors
     li.fragment avoid nesting
     li.fragment .namespace-your-selectors
+    li.fragment semantic markup is overrated
     li.fragment create modules
     li.fragment create more modules!
     li.fragment ...
@@ -413,9 +416,9 @@ section
     ul
       li + you can re-use code
       li + smaller CSS output
-      li - may blow up your selectors to gigantic, comma separated selector stacks
-      li - is not transparent, everything may get inherited
-      li - has some strange side effects with complex selectors
+      li – may blow up your selectors to gigantic, comma separated selector stacks
+      li.fragment.highlight-red – is not transparent, everything may get inherited
+      li – has some strange side effects with complex selectors
 
 section
   h3 %Placeholder Selector
@@ -472,7 +475,7 @@ section
           $pager-highlight-color: #4c4c4c;
 
 section
-  h2 1. Use SASS/Compass color manipulation
+  h3 SASS/Compass color manipulation is great!
   pre
     code
       |
@@ -485,7 +488,23 @@ section
         +saturate($color, $amount)
         +desaturate($color, $amount)
         +mix($color-1, $color-2, [$weight])
+  p
+    | You need to now details about the design- and color concept!
 
+section
+  h3 Try to define base variables only.
+  p move specific variables into the modules
+  pre
+    code
+      | $primary-color
+        $secondary-color
+        $spot-color
+        $text-color
+
+        $base-gap
+        $grid-width
+  p
+    | You need to now details about the design- and color concept!
 
 section
   h4 2. Use local variables
@@ -508,6 +527,8 @@ section
           padding: 2px $base-gap*1.5
           +background-image(linear-gradient($bg-blue, $bg-blue-dark))
 
+        .button
+          @extend %button
           &.button-red
             $red-start: shade($spot-color, 16)
             $red-stop: darken($spot-color, 26)
@@ -545,9 +566,34 @@ section
       a href="http://www.hagenburger.net/BLOG/Document-Your-CSS-Sass-With-Variables.html"
         | http://www.hagenburger.net/BLOG/Document-Your-CSS-Sass-With-Variables.html
 
+section
+  h2 JS Bindings, the rails way
+  p (lazy slide)
+  pre
+    code
+      | = link_to 'Do it!', '#', class: 'btn btn-red',
+          data: {behaviour: 'open-dialog'}
+
+  pre
+    code
+      = '<a href="#" class="btn btn-red" data-behavior="open-dialog">'
+
+  pre
+    code
+      | // jQuery helper
+        $.behaviour = function(behaviour, context) {
+          return $('[data-behaviour~='+behaviour+']', context)
+        }
+  pre
+    code
+      |
+        $.behaviour('open-dialog').click(function (event) {
+          event.preventDefault();
+          //... open the dialog!
+        }));
 
 section
-  h1 Kudos to
+  h2 Kudos to
 
   p
     | Jonathan Snook
@@ -560,5 +606,7 @@ section
     == link_to "(@Hagenburger)", "http://twitter.com/hagenburger"
 
   p
-    | Examples in this Presentation are mostly shameless clones or stolen from these People!
+    | Examples in this Presentation are mostly shameless clones or stolen!
 
+section
+  h1 Questions?
