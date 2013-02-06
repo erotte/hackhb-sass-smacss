@@ -79,7 +79,7 @@ section
     li classification system
 
 section
-  
+
   h2 Categorizing CSS rules
   ul
     li Base
@@ -112,7 +112,7 @@ section
 section
   h3 Layout
   ul
-    li basic layout
+    li (outer) layout container styles
     li page sections
     li grid
     li usually: single selectors, #ids
@@ -163,9 +163,9 @@ section
         + modules/
         + other/
   p
-    small 
+    small
       a href="http://railslove.com/blog/2012/03/28/smacss-and-sass-the-future-of-stylesheets/"
-        | http://railslove.com/blog/2012/03/28/smacss-and-sass-the-future-of-stylesheets/ 
+        | http://railslove.com/blog/2012/03/28/smacss-and-sass-the-future-of-stylesheets/
 section
   h3 Some conventions and rules
   ul
@@ -201,11 +201,11 @@ section
     code
       | .message {
           border: 1px solid #333;
-          
+
           .message-header {
             font-weight: bold;
           }
-          
+
           .message-body
             font-size: 14px
           }
@@ -273,7 +273,7 @@ section
         }
 
 section
-  h3 Sub-Modules 
+  h3 Sub-Modules
   pre
     code
       | .searchbox {
@@ -282,8 +282,8 @@ section
             width: 50%;
           }
         }
-        .searchbox-wide input[type=text]{
-            width: 100%;
+        .searchbox-outlined{
+            border: 1px solid #333
         }
         .searchbox-fixed {
           width: 200px;
@@ -291,7 +291,7 @@ section
         .searchbox-fixed input[type=text] {
           width: 150px;
         }
-  
+
   pre
     code
       = '<div class="searchbox searchbox-fixed">'
@@ -327,10 +327,26 @@ section
       | .searchbox
           &.searchbox-fixed
             width: 200px;
-
-  
 section
-  h2 SMURF
+  h2 a SASS module
+  pre
+    code
+      | .searchbox
+          width: 100%
+
+          input[type=text]
+            width: 50%
+
+          &.searchbox-fixed
+            width: 200px
+            input[type=text]
+              width: 150px
+
+          &.searchbox-outlined
+            border: 1px solid red
+
+section
+  h1 SMURF
   p Scalable, Modular, reUsable Rails Frontends
   p
     | by Jakob Hilden
@@ -339,10 +355,10 @@ section
   ul.fragment
     li additional coding conventions for SMACSS
     li a Ruby gem called "Smurfville" for generating live styleguides
-    li more accurate definitions of submodules and components
+    li more accurate definitions of submodules, components and modifiers
 
 section
-  H3 Examples
+  H3 Example
   pre
     code
       | // -- module --
@@ -363,10 +379,43 @@ section
         // additional component, that only exists in the submodule
           .m-box_attention--teaser
   p
-    small 
+    small
       a href="http://railslove.com/blog/2012/11/09/taking-sass-to-the-next-level-with-smurf-and-extend"
-        | http://railslove.com/blog/2012/11/09/taking-sass-to-the-next-level-with-smurf-and-extend 
+        | http://railslove.com/blog/2012/11/09/taking-sass-to-the-next-level-with-smurf-and-extend
 
+
+section
+  section
+    h1 Working with SASS extendables
+    p collecting selectors
+  section
+    p SASS
+    pre
+      code
+        | .button
+            color: #333
+          .button-red
+            @extend .button
+            background: red
+            color: white
+
+    p generated CSS
+    pre
+      code
+        | .button, .button-red {
+            color: #333333; }
+
+          .button-red {
+            background: red;
+            color: white; }
+  section
+    p @extend
+    ul
+      li + you can re-use code
+      li + smaller CSS output
+      li - may blow up your selectors to gigantic, comma separated selectors
+      li - is not transparent, everything may get inherited
+      li - has some strange side effects with complex selectors
 
 section
   h1 SASS Variables
