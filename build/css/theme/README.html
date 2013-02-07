@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="de">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>SASS und SMACSS in größeren Projekten</title>
+
+    <meta name="description" content="">
+    <meta name="author" content="Eckhard Rotte">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <h2 id='dependencies'>Dependencies</h2>
+
+<p>Themes are written using Sass to keep things modular and reduce the need for repeated selectors across files. Find out how to install Sass here http://sass-lang.com/, once Sass is installed run the follwing command to start monitoring the source files for changes.</p>
+
+<p><code>
+sass --watch css/theme/source/:css/theme --style expanded
+</code></p>
+
+<h2 id='creating_a_theme'>Creating a Theme</h2>
+
+<p>To create your own theme, start by duplicating any <code>.scss</code> file in <a href='https://github.com/hakimel/reveal.js/blob/master/css/theme/source'>/css/theme/source</a>. Each theme does four things in the following order:</p>
+
+<ol>
+<li>
+<p><strong>Include <a href='https://github.com/hakimel/reveal.js/blob/master/css/theme/template/mixins.scss'>/css/theme/template/mixins.scss</a></strong><br />Shared utility functions.</p>
+</li>
+
+<li>
+<p><strong>Include <a href='https://github.com/hakimel/reveal.js/blob/master/css/theme/template/settings.scss'>/css/theme/template/settings.scss</a></strong><br />Declares a set of custom variables that the template file (step 4) expects. Can be overridden in step 3.</p>
+</li>
+
+<li>
+<p><strong>Override</strong><br />This is where you override the default theme. Either by specifying variables (see <a href='https://github.com/hakimel/reveal.js/blob/master/css/theme/template/settings.scss'>settings.scss</a> for reference) or by adding full selectors with hardcoded styles.</p>
+</li>
+
+<li>
+<p><strong>Include <a href='https://github.com/hakimel/reveal.js/blob/master/css/theme/template/theme.scss'>/css/theme/template/theme.scss</a></strong><br />The template theme file which will generate final CSS output based on the currently defined variables.</p>
+</li>
+</ol>
+      </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+          // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>

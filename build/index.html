@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="de">
+
+  <head>
+    <meta charset="utf-8">
+
+<title>SASS und SMACSS in größeren Projekten</title>
+
+<meta name="description" content="">
+<meta name="author" content="Eckhard Rotte">
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<link rel="stylesheet" href="css/reveal.min.css">
+<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+<!-- For syntax highlighting -->
+<link rel="stylesheet" href="lib/css/zenburn.css">
+
+<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+<script>
+  document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+</script>
+
+<!--[if lt IE 9]>
+<script src="lib/js/html5shiv.js"></script>
+<![endif]-->
+
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section>
+  <h1>Scalable<br />and<br />Maintainable
+     CSS/SASS</h1>
+  <p>
+    <small>Eckhard Rotte,&nbsp;<a href="http://twitter.com/erotte"> (@erotte)</a><br /><a href="http://appfertigung.com">appfertigung.com</a></small>
+  </p>
+</section>
+<section>
+  <h2>So, whats wrong with SASS?</h2>
+  <p class="fragment">Nothing.</p>
+  <aside class="notes">
+    <Notizen>Popizen</Notizen>
+  </aside>
+</section>
+<section>
+  <h2>But:</h2>
+  <ul>
+    <li class="fragment">Our apps constantly increase in complexity (Blah&hellip;)</li>
+    <li class="fragment">responsive, mobile etc.</li>
+    <li class="fragment">CSS still sucks</li>
+    <li class="fragment">everybody is still doing their own thing</li>
+  </ul>
+</section>
+<section>
+  <h2>SASS/Compass</h2>
+  <ul>
+    <li class="fragment">No constraints. No rules.</li>
+    <li class="fragment">It's very easy to create complex bullshit SASS/CSS!</li>
+  </ul>
+</section>
+<section>
+  <h2>Shitty code alert!</h2>
+  <pre><code>#page
+  #list
+    +column(18,true)
+    #list-header
+      text-align: right
+      .view-actions
+        float: right
+        a
+          +inline-block
+          height: 25px
+          &#action-flat
+            background: transparent image-url('bg-tabs.png')
+            &.active
+              background-position: 0 0
+            &:hover
+              background-position: 0 -50px
+          &#action-grouped
+            background: #cde
+            &.active
+              background-position: -36px -25px</code></pre><pre class="fragment"><code>#page #list #list-header .view-actions a#action-flat.active:hover{
+  background-position: 0 0
+}</code></pre>
+</section>
+<section>
+  <h1>SMACSS</h1>
+  <p class="fragment">Scalable and Modular Architecture for CSS</p>
+  <p class="fragment">by Jonathan Snook<a href="http://twitter.com/snookca">(@snookca)</a></p>
+  <ul class="fragment">
+    <li>coding and naming conventions</li>
+    <li>a style guide</li>
+    <li>a guidelines framework</li>
+    <li>classification system</li>
+  </ul>
+</section>
+<section>
+  <h2>Categorizing CSS rules</h2>
+  <ul>
+    <li>Base</li>
+    <li>Layout</li>
+    <li>Modules</li>
+    <li>State</li>
+    <li>(Theme)</li>
+  </ul>
+</section>
+<section>
+  <h3>Base</h3>
+  <ul>
+    <li>basic element styles</li>
+    <li>the defaults</li>
+    <li>resets</li>
+    <li>should not contain nested rules</li>
+  </ul>
+  <pre><code>html, body, form {
+  margin: 0;
+  padding: 0; }
+
+input[type=text] {
+  border: 1px solid #cde;
+}
+
+a { color: #039; }
+a:hover { color: #03C; }</code></pre>
+</section>
+<section>
+  <h3>Layout</h3>
+  <ul>
+    <li>(outer) layout container styles</li>
+    <li>page sections</li>
+    <li>grid</li>
+    <li>usually: single selectors, #ids</li>
+    <li>may include contextual selectors</li>
+  </ul>
+  <pre><code>#header, #footer {
+  width:  auto;
+  margin  0 auto;
+}
+.l-fixed {
+  #header, #footer {
+    width:  960px;
+  }
+}</code></pre>
+</section>
+<section>
+  <h3>Modules</h3>
+  <ul>
+    <li>are reuseable, modular, fragments, components, sections, widgets</li>
+    <li>e.g. buttons, a product list, sidebar nav or teaser box</li>
+  </ul>
+</section>
+<section>
+  <h3>State</h3>
+  <ul>
+    <li>hidden or visible?</li>
+    <li>collapsed or expanded?</li>
+    <li>emphasized or quiet?</li>
+  </ul>
+</section>
+<section>
+  <h3>(Themes)</h3>
+  <p>...</p>
+</section>
+<section>
+  <h2>Example File Structure</h2>
+  <pre><code>+ application.sass                  // @imports
++ base/
+|   _settings.css.sass              // SASS config variables
+|   _reset.css.sass
+|   _colors.css.sass
+|   _element_defaults.css.sass
++ layout/
+|   _settings.css.sass              // SASS layout/grid variables
+|   _containers.css.sass
++ modules/
++ other/</code></pre>
+  <p>
+    <small><a href="http://railslove.com/blog/2012/03/28/smacss-and-sass-the-future-of-stylesheets/">http://railslove.com/blog/2012/03/28/smacss-and-sass-the-future-of-stylesheets/</a></small>
+  </p>
+</section>
+<section>
+  <h3>Some conventions and rules</h3>
+  <ul>
+    <li class="fragment">use classes</li>
+    <li class="fragment">avoid #ids</li>
+    <li class="fragment">avoid element selectors</li>
+    <li class="fragment">avoid nesting</li>
+    <li class="fragment">.namespace-your-selectors</li>
+    <li class="fragment">semantic markup is overrated</li>
+    <li class="fragment">create modules</li>
+    <li class="fragment">create more modules!</li>
+    <li class="fragment">...</li>
+  </ul>
+</section>
+<section>
+  <h2>Example</h2>
+  <pre><code>/* a layout rule */
+.layout-fixed {...};
+
+/* you may shorten the prefix */
+.l-fixed {...};
+
+/* a module. no prefix needed! */
+.tab {...};
+
+/* a module with state */
+.tab.is-active {...}</code></pre>
+</section>
+<section>
+  <h3>Components</h3>
+  <p>parts of a module</p>
+  <pre><code>.message {
+  border: 1px solid #333;
+
+  .message-header {
+    font-weight: bold;
+  }
+
+  .message-body
+    font-size: 14px
+  }
+}</code></pre>
+</section>
+<section>
+  <h5>CSS</h5>
+  <pre><code>.searchbox {
+  width: 100%;
+}
+.searchbox input[type=text] {
+    width: 50%;
+}</code></pre>
+  <h5>SCSS</h5>
+  <pre><code>.searchbox {
+  width: 100%;
+  input[type=text] {
+    width: 50%;
+  }
+}</code></pre>
+  <div class="fragment">
+    <h4>Challenge</h4>
+    <p>we need a variant of .searchbox in the Sidebar, with a full width input field. <br />What's your first instinct? </p>
+  </div>
+</section>
+<section>
+  <h4>common solution:</h4>
+  <pre><code>#sidebar .searchbox input[type=text]{
+    width: 100%;
+}</code></pre>
+  <p class="fragment">so far so good. <br />Next exercise: we need another variant with a fixed width! </p>
+</section>
+<section>
+  <h3>Nested Rules</h3>
+  <h4>Specifity Wars start here</h4>
+  <pre><code>.searchbox {
+  width: 100%;
+  input[type=text] {
+    width: 50%;
+  }
+}
+#sidebar .searchbox input[type=text]{
+    width: 100%;
+}
+.searchbox-fixed {
+  width: 200px;
+}
+.searchbox-fixed input[type=text],
+#sidebar .searchbox-fixed input[type=text] {
+  width: 150px;
+}</code></pre>
+</section>
+<section>
+  <h3>Sub-Modules</h3>
+  <pre><code>.searchbox {
+  width: 100%;
+  input[type=text] {
+    width: 50%;
+  }
+}
+.searchbox-outlined{
+    border: 1px solid #333
+}
+.searchbox-fixed {
+  width: 200px;
+}
+.searchbox-fixed input[type=text] {
+  width: 150px;
+}</code></pre><pre><code>&lt;div class=&quot;searchbox searchbox-fixed&quot;&gt;<br />  &lt;input type=&quot;text&quot; ... /&gt;<br />&lt;/div&gt;</code></pre>
+</section>
+<section>
+  <ul>
+    <li>Markup moves fast. Try to avoid conditional styling based on location</li>
+    <li>create a Sub-Module of the module instead.</li>
+  </ul>
+</section>
+<section>
+  <h3>Sub-Classing</h3>
+  <p>CSS</p>
+  <pre><code>.searchbox.searchbox-fixed {
+  width: 200px;
+}</code></pre>
+  <p>SCSS</p>
+  <pre><code>.searchbox {
+  &.searchbox-fixed {
+    width: 200px;
+  }
+}</code></pre>
+  <p>SASS</p>
+  <pre><code>.searchbox
+  &.searchbox-fixed
+    width: 200px;</code></pre>
+</section>
+<section>
+  <h2>a SASS module</h2>
+  <pre><code>.searchbox
+  width: 100%
+
+  input[type=text]
+    width: 50%
+
+  &.searchbox-fixed
+    width: 200px
+    input[type=text]
+      width: 150px
+
+  &.searchbox-outlined
+    border: 1px solid red</code></pre>
+</section>
+<section>
+  <h1>SMURF</h1>
+  <p>Scalable, Modular, reUsable Rails Frontends</p>
+  <p>by Jakob Hilden<a href="http://twitter.com/jkwebs">(@jkwebs)</a></p>
+  <ul class="fragment">
+    <li>additional coding conventions for SMACSS</li>
+    <li>a Ruby gem called "Smurfville" for generating live styleguides</li>
+    <li>more accurate definitions of submodules, components and modifiers</li>
+  </ul>
+</section>
+<section>
+  <H3>Example</H3><pre><code>// -- module --
+.m-box
+  // components
+  .m-box--header
+  .m-box--body
+
+  // modifiers
+  &.no-border
+  &.right
+
+  // states
+  &.is-disabled
+
+// -- submodule --
+.m-box_attention
+// additional component, that only exists in the submodule
+  .m-box_attention--teaser</code></pre>
+  <p>
+    <small><a href="http://railslove.com/blog/2012/11/09/taking-sass-to-the-next-level-with-smurf-and-extend">http://railslove.com/blog/2012/11/09/taking-sass-to-the-next-level-with-smurf-and-extend</a></small>
+  </p>
+</section>
+<section>
+  <section>
+    <h1>Working with SASS extendables</h1>
+    <p>collecting selectors</p>
+  </section>
+  <section>
+    <p>SASS</p>
+    <pre><code>.button
+  color: #333
+.button-red
+  @extend .button
+  background: red
+  color: white</code></pre>
+    <p>generated CSS</p>
+    <pre><code>.button, .button-red {
+  color: #333333; }
+
+.button-red {
+  background: red;
+  color: white; }</code></pre>
+  </section>
+  <section>
+    <p>@extend</p>
+    <ul>
+      <li>+ you can re-use code</li>
+      <li>+ smaller CSS output</li>
+      <li>– may blow up your selectors to gigantic, comma separated selector stacks</li>
+      <li class="fragment highlight-red">– is not transparent, everything may get inherited</li>
+      <li>– has some strange side effects with complex selectors</li>
+    </ul>
+  </section>
+</section>
+<section>
+  <h3>%Placeholder Selector</h3>
+  <p>won't be compiled until it's @extended</p>
+  <pre><code>%clearfix
+  overflow: none;
+  *zoom: 1;
+
+aside, footer
+  @extend %clearfix;
+
+#grid-container
+  @extend %clearfix;</code></pre>
+  <p>produces</p>
+  <pre><code>aside, footer, #grid-container {
+  overflow: none;
+  *zoom: 1;
+}</code></pre>
+</section>
+<section>
+  <h1>SASS Variables</h1>
+</section>
+<section>
+  <h2>Shitty Code Alert again!</h2>
+  <pre><code><small>// - buttons
+$button-font-size: $base-font-size;
+$button-light-color: #5f737d;
+$button-background-color: #1a3744;
+$button-text-color: white;
+$search-button-background-color: $accent-color;
+$search-button-light-color: #48BFE3;
+$search-button-text-color: white;
+$admin-button-light-color: #adbabe;
+$admin-button-background-color: #8c9ea4;
+$admin-button-text-color: white;
+//
+$neighbours-background-color: $button-background-color;
+$neighbours-separator-color: $button-light-color;
+$footer-text-color: $medium-gray;
+$net-rating-border-color: #d2d2d2;
+//
+$pager-text-color: #666;
+$pager-color: #b3b3b3;
+$pager-highlight-color: #4c4c4c;</small></code></pre>
+</section>
+<section>
+  <h3>SASS/Compass color manipulation is great!</h3>
+  <pre><code>// Makes a color lighter.
++lighten($color, $amount)
+
+// Makes a color darker.
++darken($color, $amount)
+
++saturate($color, $amount)
++desaturate($color, $amount)
++mix($color-1, $color-2, [$weight])</code></pre>
+  <p>You need to now details about the design- and color concept!</p>
+</section>
+<section>
+  <h3>Try to define base variables only.</h3>
+  <p>move specific variables into the modules</p>
+  <pre><code>$primary-color
+$secondary-color
+$spot-color
+$text-color
+
+$base-gap
+$grid-width</code></pre>
+  <p>You need to now details about the design- and color concept!</p>
+</section>
+<section>
+  <h4>2. Use local variables</h4>
+  <pre><code>// config
+
+// somewhere in the grids...
+$base-gap: 10px
+
+// colors
+$ci-blue: #0F559A
+$spotcolor: #faaaee</code></pre><pre><code>%button
+  $bg-blue: $ci-blue
+  $bg-blue-dark: darken($ci-blue, 20)
+  padding: 2px $base-gap*1.5
+  +background-image(linear-gradient($bg-blue, $bg-blue-dark))
+
+.button
+  @extend %button
+  &.button-red
+    $red-start: shade($spot-color, 16)
+    $red-stop: darken($spot-color, 26)
+    +background-image(linear-gradient($red-start, $red-stop))</code></pre>
+</section>
+<section>
+  <h4>It may get a kind of documentation</h4>
+  <pre><code>.my-class {
+  border: 1px red solid;
+  height: 244px;
+  padding: 6px;
+  width: 368px;
+}</code></pre>
+  <p>vs.</p>
+  <pre><code>.my-class {
+  $border-width: 1px;
+  $padding: 6px;
+  $height: 256px
+  $width: 380px;
+
+  border: $border-width red solid;
+  height: $height - 2 * ($padding + $border-width);
+  padding: $padding;
+  width: $width - 2 * ($padding + $border-width);
+}</code></pre>
+  <p>
+    <small><a href="http://www.hagenburger.net/BLOG/Document-Your-CSS-Sass-With-Variables.html">http://www.hagenburger.net/BLOG/Document-Your-CSS-Sass-With-Variables.html</a></small>
+  </p>
+</section>
+<section>
+  <h2>JS Bindings, the rails way</h2>
+  <p>(lazy slide)</p>
+  <pre><code>= link_to 'Do it!', '#', class: 'btn btn-red',
+  data: {behaviour: 'open-dialog'}</code></pre><pre><code>&lt;a href=&quot;#&quot; class=&quot;btn btn-red&quot; data-behavior=&quot;open-dialog&quot;&gt;</code></pre><pre><code>// jQuery helper
+$.behaviour = function(behaviour, context) {
+  return $('[data-behaviour~='+behaviour+']', context)
+}</code></pre><pre><code>$.behaviour('open-dialog').click(function (event) {
+  event.preventDefault();
+  //... open the dialog!
+}));</code></pre>
+</section>
+<section>
+  <h2>Kudos to</h2>
+  <p>Jonathan Snook<a href="http://twitter.com/snookca">(@snookca)</a></p>
+  <p>Jakob Hilden<a href="http://twitter.com/jkwebs">(@jkwebs)</a></p>
+  <p>Nico Hagenburger<a href="http://twitter.com/hagenburger">(@Hagenburger)</a></p>
+  <p>Examples in this Presentation are mostly shameless clones or stolen!</p>
+</section>
+<section>
+  <h1>Questions?</h1>
+</section>
+      </div>
+
+    </div>
+
+        <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'zoom', // default/cube/page/concave/zoom/linear/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+          ,
+          { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+
+
+  </body>
+</html
